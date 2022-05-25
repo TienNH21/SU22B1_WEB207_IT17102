@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/IT17101/css/bootstrap.min.css" />
+</head>
+<body ng-app="demo_hello_world">
+    <div ng-controller="my_controller">
+        <h1>{{ hoTen }}</h1>
+        <input type="text" name="ho_ten" ng-model="hoTen" />
+    </div>
+
+
+    <script src="/IT17101/js/jquery.min.js"></script>
+    <script src="/IT17101/js/popper.min.js"></script>
+    <script src="/IT17101/js/bootstrap.min.js"></script>
+    <script src="/IT17101/js/angularjs.min.js"></script>
+    <script>
+        const app = angular.module("demo_hello_world", []);
+
+        function myController($scope) {
+            $scope.message = "Hello World";
+            $scope.hoTen = "Tran Van B";
+            $scope.sv = {
+                name: "Ng Van A",
+                age: 20,
+                code: "PH12345"
+            };
+        }
+
+        app.controller("my_controller", myController);
+    </script>
+</body>
+</html>
