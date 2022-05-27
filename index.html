@@ -11,8 +11,17 @@
     <div ng-controller="my_controller">
         <h1>{{ hoTen }}</h1>
         <input type="text" name="ho_ten" ng-model="hoTen" />
+        <button ng-click="btnOnClick($event)">Click me</button>
+        <div>
+            <form ng-submit="formSubmit($event)">
+                <label>A</label>
+                <input type="number" ng-model="a" />
+                <label>B</label>
+                <input type="number" ng-model="b" />
+                <button>Tổng</button>
+            </form>
+        </div>
     </div>
-
 
     <script src="/IT17101/js/jquery.min.js"></script>
     <script src="/IT17101/js/popper.min.js"></script>
@@ -20,8 +29,15 @@
     <script src="/IT17101/js/angularjs.min.js"></script>
     <script>
         const app = angular.module("demo_hello_world", []);
-
         function myController($scope) {
+            $scope.a = 0;
+            $scope.b = 0;
+
+            $scope.formSubmit = function (event) {
+                event.preventDefault();
+                alert($scope.a + $scope.b);
+            }
+
             $scope.message = "Hello World";
             $scope.hoTen = "Tran Van B";
             $scope.sv = {
@@ -29,6 +45,12 @@
                 age: 20,
                 code: "PH12345"
             };
+            $scope.btnOnClick = function (event) {
+                console.log(event);
+                // alert("Hello Poly");
+            }
+
+
         }
 
         app.controller("my_controller", myController);
