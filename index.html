@@ -24,6 +24,7 @@
     <script src="/IT17101/modules/demo/green/green.js"></script>
     <script src="/IT17101/modules/demo/red/red.js"></script>
     <script src="/IT17101/modules/demo/yellow/yellow.js"></script>
+    <script src="/IT17101/modules/demo_assignment/qlsv/index.js"></script>
     <script>
         const app = angular.module("demo_hello_world", ["ngRoute"]);
         app.config(function ($routeProvider, $locationProvider) {
@@ -41,6 +42,10 @@
                     templateUrl: "modules/demo/green/green.html",
                     controller: "greenController",
                 })
+                .when("/quan-ly-sinh-vien", {
+                    templateUrl: "modules/demo_assignment/qlsv/index.html",
+                    controller: "qlsvController",
+                })
                 .otherwise({
                     template: "<div style='height: 100px;' class='bg-default'>Not Found</div>"
                 });
@@ -48,6 +53,7 @@
             app.controller("redController", redController);
             app.controller("yellowController", yellowController);
             app.controller("greenController", greenController);
+            app.controller("qlsvController", qlsvController);
     </script>
 </body>
 </html>

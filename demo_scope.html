@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/IT17101/css/bootstrap.min.css" />
+</head>
+<body ng-app="demo_scope">
+    <div ng-controller="my_parent_controller">
+        {{ fullname }} - {{ mon_hoc }}
+        <div ng-controller="my_controller_1">
+            <!-- Điều kiện ong vàng: điểm trung bình >= 9 -->
+            <h2 ng-show="sv.diem_tb >= 9">Bạn đã đạt ong vàng</h2>
+            <h2 ng-hide="sv.diem_tb >= 9">Bạn chưa đạt ong vàng</h2>
+            <h2 ng-if="sv.diem_tb >= 9">Bạn đã đạt ong vàng</h2>
+
+            <h2>
+                Chuyên ngành:
+                <span ng-switch="sv.chuyen_nganh">
+                    <span ng-switch-when="udpm">Ứng dụng phần mềm</span>
+                    <span ng-switch-when="tktw">Thiết kế trang web</span>
+                    <span ng-switch-when="ltmt">Lập trình máy tính</span>
+                    <span ng-switch-default>Ngành khác</span>
+                </span>
+            </h2>
+        </div>
+        <div ng-controller="my_controller_2" ng-init="msg=123">
+            {{ msg }} - {{ fullname }} - {{ mon_hoc }}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã môn</th>
+                        <th>Tên môn</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="mon_hoc in ds_mon_hoc">
+                        <td ng-bind="mon_hoc.ma_mon"></td>
+                        <td ng-bind="mon_hoc.ten_mon"></td>
+                        <td>
+                            <span ng-switch="mon_hoc.trang_thai">
+                                <span ng-switch-when="0">Chưa học</span>
+                                <span ng-switch-when="1">Passed</span>
+                                <span ng-switch-when="2">Failed</span>
+                                <span ng-switch-when="3">Đang học</span>
+                                <span ng-switch-default>-</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="/IT17101/js/jquery.min.js"></script>
+    <script src="/IT17101/js/popper.min.js"></script>
+    <script src="/IT17101/js/bootstrap.min.js"></script>
+    <script src="/IT17101/js/angularjs.min.js"></script>
+    <script>
+        const app = angular.module("demo_scope", []);
+
+        function myController1($scope) {
+            $scope.msg = "Content 1";
+            $scope.sv = {
+                ten: "Ng Van A",
+                diem_tb: 9,
+                chuyen_nganh: "tktw",
+            };
+        }
+
+        function myController2($scope) {
+            $scope.msg = "Content 2";
+            /*
+             * trạng thái: 0 - chưa học, 1 - đã pass, 2 - trượt, 3 - đang học
+             */
+            $scope.ds_mon_hoc = [
+                { ma_mon: "COM108", ten_mon: "Nhập môn lập trình", trang_thai: 1 },
+                { ma_mon: "MOB1014", ten_mon: "Lập trình Java 1", trang_thai: 1 },
+                { ma_mon: "MOB1023", ten_mon: "Lập trình Java 2", trang_thai: 2 },
+                { ma_mon: "SOF203", ten_mon: "Lập trình Java 3", trang_thai: 3 },
+                { ma_mon: "SOF3011", ten_mon: "Lập trình Java 4", trang_thai: 0 },
+            ];
+        }
+
+        function myParentController($scope, $rootScope) {
+            $scope.fullname = "Ng Van A";
+            $rootScope.mon_hoc = "WEB207";
+        }
+
+        app.controller("my_controller_1", myController1);
+        app.controller("my_controller_2", myController2);
+        app.controller("my_parent_controller", myParentController);
+    </script>
+</body>
+</html>
