@@ -1,84 +1,108 @@
 <div class="container">
 	<!-- Form -->
 	<div class="row col-12">
-		<div class="row mt-4">
-			<div class="col-6">
-				<label>Họ tên</label>
-				<input
-					ng-model="form_data.ho_ten"
-					type="text"
-					class="form-control"
-					name="ho_ten"
-					id="ho_ten" />
+		<form name="form_sv">
+			<div class="row mt-4">
+				<div class="col-6">
+					<label>Họ tên</label>
+					<input
+						ng-model="form_data.ho_ten"
+						type="text"
+						class="form-control"
+						name="ho_ten"
+						id="ho_ten"
+						required />
+					<span ng-hide="form_sv.ho_ten.$valid || form_sv.ho_ten.$untouched"
+						class="text-danger">
+						Không được để trống
+					</span>
+				</div>
+				<div class="col-6">
+					<label>C/Ngành</label>
+					<select
+						ng-model="form_data.chuyen_nganh"
+						name="c_nganh"
+						class="form-select"
+						id="c_nganh">
+						<option value="udpm">Ứng dụng phần mềm</option>
+						<option value="tktw">Thiết kế trang web</option>
+						<option value="ltmt">Lập trình máy tính</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-6">
-				<label>C/Ngành</label>
-				<select
-					ng-model="form_data.chuyen_nganh"
-					name="c_nganh"
-					class="form-select"
-					id="c_nganh">
-					<option value="udpm">Ứng dụng phần mềm</option>
-					<option value="tktw">Thiết kế trang web</option>
-					<option value="ltmt">Lập trình máy tính</option>
-				</select>
+			<div class="row mt-4">
+				<div class="col-6">
+					<label>Mã SV</label>
+					<input
+						ng-model="form_data.ma_sv"
+						type="text"
+						class="form-control"
+						name="ma_sv"
+						id="ma_sv" />
+				</div>
+				<div class="col-6">
+					<label>Ngày nhập học</label>
+					<input
+						ng-model="form_data.ngay_nhap_hoc"
+						type="date"
+						class="form-control"
+						name="ngay_nhap_hoc"
+						id="ngay_nhap_hoc" />
+				</div>
 			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="col-6">
-				<label>Mã SV</label>
-				<input
-					ng-model="form_data.ma_sv"
-					type="text"
-					class="form-control"
-					name="ma_sv"
-					id="ma_sv" />
+			<div class="row mt-4">
+				<div class="col-6">
+					<label>Giới tính</label>
+					<input
+						ng-model="form_data.gioi_tinh"
+						type="radio"
+						value="1"
+						class="form-check-input"
+						name="gioi_tinh"
+						id="gioi_tinh_nam" />
+					<label>Nam</label>
+					<input
+						ng-model="form_data.gioi_tinh"
+						type="radio"
+						value="0"
+						class="form-check-input"
+						name="gioi_tinh"
+						id="gioi_tinh_nu"
+						/>
+					<label>Nữ</label>
+				</div>
+				<div class="col-6">
+					<label>Email</label>
+					<input
+						ng-model="form_data.email"
+						type="email"
+						class="form-control"
+						name="email"
+						id="email"
+						required />
+					<span ng-show="form_sv.email.$error.required" class="text-danger">
+						Không được để trống
+					</span>
+
+					<span ng-show="form_sv.email.$error.email" class="text-danger">
+						Không được định dạng email
+					</span>
+				</div>
 			</div>
-			<div class="col-6">
-				<label>Ngày nhập học</label>
-				<input
-					ng-model="form_data.ngay_nhap_hoc"
-					type="date"
-					class="form-control"
-					name="ngay_nhap_hoc"
-					id="ngay_nhap_hoc" />
+			<div class="row mt-4">
+				<button
+					class="btn btn-success col-1 m-3"
+					ng-click="onBtnCreateClick($event)">Create</button>
+				<button class="btn btn-primary col-1 m-3">Update</button>
+				<button class="btn btn-default col-1 m-3">Clear</button>
 			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="col-6">
-				<label>Giới tính</label>
-				<input
-					ng-model="form_data.gioi_tinh"
-					type="radio"
-					value="1"
-					class="form-check-input"
-					name="gioi_tinh"
-					id="gioi_tinh_nam" />
-				<label>Nam</label>
-				<input
-					ng-model="form_data.gioi_tinh"
-					type="radio"
-					value="0"
-					class="form-check-input"
-					name="gioi_tinh"
-					id="gioi_tinh_nu"
-					/>
-				<label>Nữ</label>
-			</div>
-		</div>
-		<div class="row mt-4">
-			<button
-				class="btn btn-success col-1 m-3"
-				ng-click="onBtnCreateClick($event)">Create</button>
-			<button class="btn btn-primary col-1 m-3">Update</button>
-			<button class="btn btn-default col-1 m-3">Clear</button>
-		</div>
+		</form>	
 	</div>
 	<!-- End Form -->
 
 	<!-- Table -->
 	<div>
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Mã SV</th>
@@ -89,7 +113,21 @@
 					<th colspan="2">Thao tác</th>
 				</tr>
 			</thead>
-			<tbody></tbody>
+			<tbody>
+				<tr ng-repeat="sv in list">
+					<td>{{ sv.ma_sv }}</td>
+					<td>{{ sv.ho_ten }}</td>
+					<td>{{ sv.gioi_tinh }}</td>
+					<td>{{ sv.chuyen_nganh }}</td>
+					<td>{{ sv.ngay_nhap_hoc }}</td>
+					<td>
+						<a class="btn btn-primary" href="">Update</a>
+					</td>
+					<td>
+						<a class="btn btn-danger" href="">Delete</a>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	<!-- End Table -->
